@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.Mapper.ContentMapper">
+<select id="getContentById" parameterType="int" resultType="com.example.po.Content">
+select * from `content` where id = #{id}
+	</select>
+
+<select id="getContentByName" parameterType="java.lang.String" resultType="com.example.po.Content">
+	   select * from `content` where Name like '%${value}%' 
+	</select>
+<!-- 添加用户 -->
+	<insert id="insertContent" parameterType="com.example.po.Content">
+	<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+		select LAST_INSERT_ID() 
+	</selectKey>
+	  insert into `content`(id,name,introduce,picture,sort) 
+	  values(#{id}, #{name}, #{introduce}, #{picture}, #{sort})
+	</insert>
+
+<delete id="deleteContent" parameterType="int" >
+		delete from `content` where id = #{id}
+	</delete>
+	
+	<update id="updateContent" parameterType="com.example.po.Content">
+		update `content` set name=#{name},sort=#{sort},introduce=#{introduce}
+		where id= #{id}
+	</update>
+
+</mapper>

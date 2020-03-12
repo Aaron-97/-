@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.Mapper.SnavigationMapper">
+<select id="getSnavigationById" parameterType="int" resultType="com.example.po.Snavigation">
+select * from `snavigation` where id = #{id}
+	</select>
+
+<select id="getSnavigationByName" parameterType="java.lang.String" resultType="com.example.po.Snavigation">
+	   select * from `snavigation` where name like '%${value}%'
+	</select>
+<!-- 添加用户 -->
+	<insert id="insertSnavigation" parameterType="com.example.po.Navigation">
+	<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+		select LAST_INSERT_ID() 
+	</selectKey>
+	  insert into `snavigation`(id,name,address,sort)
+	  values(#{id}, #{name}, #{address}, #{sort})
+	</insert>
+
+<delete id="deleteSnavigation" parameterType="int" >
+		delete from `snavigation` where id = #{id}
+	</delete>
+	
+	<update id="updateSnavigation" parameterType="com.example.po.Snavigation">
+		update `snavigation` set name=#{name},address=#{address},sort=#{sort}
+		where id= #{id}
+	</update>
+
+</mapper>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.Mapper.AlbumMapper">
+	<!-- 根据产品id获取产品信息 -->
+
+	<select id="getSingle" parameterType="int"
+		resultType="com.example.po.Album">
+		select * from album where id=#{id}
+	</select>
+	
+	<select id="selectAll" parameterType="java.lang.String"
+		resultType="com.example.po.Album">
+		select * from album
+	</select>
+
+<select id="getAlbumByName" parameterType="java.lang.String" resultType="com.example.po.Album">
+	   select * from `album` where name like '%${value}%' 
+	</select>
+
+	
+	<select id="selectByTags" parameterType="java.lang.String"
+		resultType="com.example.po.Album">
+		select * from album where tags like '%${tags}%'
+	</select>
+
+	<insert id="insert" parameterType="com.example.po.Album">
+		<selectKey keyProperty="id" order="AFTER"
+			resultType="java.lang.Integer">
+			select LAST_INSERT_ID()
+		</selectKey>
+		insert into album (imagePath,width,height,name,tags,createTime)
+		values(#{imagePath},#{width},#{height},#{name},#{tags},#{createTime})
+	</insert>
+	<delete id="delete" parameterType="int">
+		delete from album where
+		id=#{id}
+	</delete>
+	<update id="update" parameterType="com.example.po.Album">
+		update album set
+		imagePath=#{imagePath},width=#{width},height=#{height},name=#{name},tags=#{tags},createTime=#{createTime}
+		where id=#{id}
+	</update>
+
+
+
+</mapper>
